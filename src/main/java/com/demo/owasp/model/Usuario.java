@@ -1,22 +1,40 @@
 package com.demo.owasp.model;
 
 
+import java.util.List;
+
+import com.demo.owasp.model.enums.Rol;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Transient;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+
 @Getter @Setter
+@NoArgsConstructor
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
     //Atributos de toda la vida:
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String nombre;
     private String apellido;
     private String clave;
     private String correo;
 
     //Rol: Puede ser Administrador o Cliente.
-    private String rol; //Podría ser un enum ?
+    @Transient
+    private List<Rol> roles;
 
 
     //Constructor:

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.owasp.model.Usuario;
+import com.demo.owasp.services.impl.UsuarioService;
 
 @RestController
 @RequestMapping("/Usuarios")
@@ -30,7 +31,7 @@ public class UsuarioController {
         return service.buscarPorId(id);
     }
 
-
+/* 
     //Acciones de Admin
 
 
@@ -50,5 +51,6 @@ public class UsuarioController {
         return service.actualizar(u.getId(), u);
     }
 
+*/
 
 }

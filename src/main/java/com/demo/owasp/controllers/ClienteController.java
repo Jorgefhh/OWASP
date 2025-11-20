@@ -14,11 +14,13 @@ import com.demo.owasp.model.Usuario;
 public class ClienteController {
 
 
-
+/* 
     // Un cliente puede: Ver su propio perfil.
     @GetMapping("/{id}")
     public Usuario getClient(@PathVariable Integer id) {
         return service.buscarPorId(id);
     }
+        
+*/
 
 }
