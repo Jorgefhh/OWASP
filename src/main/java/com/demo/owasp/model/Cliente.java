@@ -14,8 +14,8 @@ public class Cliente extends Usuario{
 
     private Integer puntos;
 
-    public Cliente(Integer id, String nombre, String apellido, String correo, String clave, Integer puntos){
-        super(id, apellido, nombre, correo, clave);
+    public Cliente(Integer id, String nombre, String apellido, String correo, String clave, Integer puntos, boolean activo){
+        super(id, apellido, nombre, correo, clave, activo);
         this.puntos = puntos;
     }
 

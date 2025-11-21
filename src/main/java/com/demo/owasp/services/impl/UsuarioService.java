@@ -26,7 +26,9 @@ public class UsuarioService implements IUsuarioService{
     public Usuario buscarPorId(Integer id) {
         //Obtiene el usuario y si no existe lanza una excepción
         Usuario usuario = repo.findById(id).orElseThrow();
-
+        if (!usuario.isActivo()) {
+            throw new RuntimeException();
+        }
         usuario.setRoles(obtenerRoles(usuario.getId()));
 
         return usuario;
@@ -34,8 +36,9 @@ public class UsuarioService implements IUsuarioService{
 
     @Override
     public List<Usuario> listar() {
-        List<Usuario> lista = StreamSupport.stream(repo.findAll().spliterator(), false)
-                            .collect(Collectors.toList());
+        /*List<Usuario> lista = StreamSupport.stream(repo.findAll().spliterator(), false)
+                            .collect(Collectors.toList());*/
+        List<Usuario> lista = repo.listarActivos();
         
         lista.forEach(usuario->{usuario.setRoles(obtenerRoles(usuario.getId()));});
 
@@ -73,6 +76,18 @@ public class UsuarioService implements IUsuarioService{
         }
 
         return roles;
+    }
+
+
+    @Override
+    public void darDeBaja(Integer id) {
+        Usuario usuario = getUsuario(id);
+        usuario.setActivo(false);
+        repo.save(usuario);
+    }
+
+    private Usuario getUsuario(Integer id) {
+        return repo.findById(id).orElseThrow();
     }
 
 }

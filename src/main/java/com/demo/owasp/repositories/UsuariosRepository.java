@@ -1,5 +1,7 @@
 package com.demo.owasp.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -23,4 +25,7 @@ public interface UsuariosRepository extends CrudRepository<Usuario, Integer>{
         nativeQuery=true
     )
     Integer esCliente(Integer id);
+
+    @Query("SELECT u FROM Usuario u WHERE u.activo = true")
+    List<Usuario> listarActivos();
 }

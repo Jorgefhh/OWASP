@@ -31,6 +31,7 @@ public class Usuario {
     private String apellido;
     private String clave;
     private String correo;
+    private boolean activo = true; // Usuarios están activos por defecto.
 
     //Rol: Puede ser Administrador o Cliente.
     @Transient
@@ -39,12 +40,13 @@ public class Usuario {
 
     //Constructor:
 
-    public Usuario(Integer id, String nombre, String apellido, String correo, String clave) {
+    public Usuario(Integer id, String nombre, String apellido, String correo, String clave, boolean activo) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo=correo;
         this.clave = clave;
+        this.activo = activo;
     }
 
     //.....
