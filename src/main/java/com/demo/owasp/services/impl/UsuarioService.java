@@ -51,14 +51,9 @@ public class UsuarioService implements IUsuarioService{
 
     @Override
     public void modificar(Integer id, Usuario usuario) {
-        if (repo.existe(id)==1) {
-            usuario.setId(id);
-            repo.save(usuario);
-        }else{
-
-            //Lanzar excepción para capturarla y devolver un BAD REQUEST.
-
-        }
+        Usuario u = repo.findById(id).orElseThrow();
+        usuario.setCorreo(u.getCorreo());
+        repo.save(usuario);
     }
 
     private List<Rol> obtenerRoles(Integer id){
@@ -73,6 +68,20 @@ public class UsuarioService implements IUsuarioService{
         }
 
         return roles;
+    }
+
+    @Override
+    public void darBaja(Integer id) {
+        Usuario u = repo.findById(id).orElseThrow();
+        u.setActivo(false);
+        repo.save(u);
+    }
+
+    @Override
+    public void activar(Integer id) {
+        Usuario u = repo.findById(id).orElseThrow();
+        u.setActivo(true);
+        repo.save(u);
     }
 
 }

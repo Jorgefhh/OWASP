@@ -10,4 +10,6 @@ public interface IUsuarioService {
     List<Usuario> listar();
     Integer registrarUsuario(Usuario usuario);
     void modificar(Integer id, Usuario usuario);
+    void darBaja(Integer id);
+    void activar(Integer id);
 }
