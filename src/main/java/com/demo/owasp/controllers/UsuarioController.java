@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,42 +32,43 @@ public class UsuarioController {
         this.service = service;
     }
 
-    //Usuarios: Todos pueden registarse
-    @PostMapping("/perfil")
+    
+    //1: Todos pueden registarse (USUARIOS)
+    @PostMapping()
     public ResponseEntity<Integer> registrar(@RequestBody Usuario usuario) {
         Integer id = service.registrarUsuario(usuario);
         return ResponseEntity.created(null).build();
     }
 
-    //Cliente: puede ver su perfil
-    @GetMapping("/perfil/{id}")
+    // ---------------- Endpoints con seguridad para roles ----------------- //
+    
+    //Ver un perfil (ADMIN: VE CUALQUIERA / CLIENTE: SOLO SU PROPIO ID)
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or (isAuthenticated() and #id == authentication.principal.id)")
     public ResponseEntity<Usuario> miPerfil(@PathVariable Integer id) {
         Usuario usuario = service.buscarPorId(id);
         return ResponseEntity.ok(usuario);
     }
 
-    //Cliente: puede modificar su perfil <- Podría ser una vulnerabilidad.
-    @PutMapping("/perfil/{id}")
+    //3: Listar todos los perfiles activos (SOLO ADMIN)
+    @GetMapping()
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Usuario>> listar() {
+        return ResponseEntity.ok(service.listar());
+    }
+    
+    
+    //4 : Modificar su perfil (ADMIN O CLIENTE si es su ID)
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
     public ResponseEntity<Void> modificarMiPerfil(@PathVariable Integer id, @RequestBody Usuario usuario) {
         service.modificar(id, usuario);
         return ResponseEntity.ok().build();
     }
 
-    //Admin: puede listar todos los perfiles activos
-    @GetMapping("/perfil/admin")
-    public ResponseEntity<List<Usuario>> listar() {
-        return ResponseEntity.ok(service.listar());
-    }
-
-    // Admin: modificar cualquier usuario
-    @PutMapping("/admin/{id}")
-    public ResponseEntity<Void> modificar(@PathVariable Integer id, @RequestBody Usuario usuario) {
-        service.modificar(id, usuario);
-        return ResponseEntity.ok().build();
-    }
-
-    //Admin: dar de baja cualquier usuario
-    @DeleteMapping("/{id}")
+    //5 : Dar de baja cualquier usuario (SOLO ADMIN)
+    @DeleteMapping("/{id}")   //Comentar esta linea para testear vulnerablidades.
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> darDeBaja(@PathVariable Integer id) {
         service.darBaja(id);
         return ResponseEntity.ok().build();

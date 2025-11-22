@@ -4,6 +4,8 @@ package com.demo.owasp.model;
 import java.util.List;
 
 import com.demo.owasp.model.enums.Rol;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,6 +36,8 @@ public class Usuario {
     @Column(nullable = false, length = 50)
     private String apellido;
 
+    //Etiqueta para recibir atributo en request pero no mostrar en responses:
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false, columnDefinition = "CHAR(60)")
     private String clave;
 
