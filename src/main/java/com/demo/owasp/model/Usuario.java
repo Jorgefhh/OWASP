@@ -39,6 +39,7 @@ public class Usuario {
 
     @Column(nullable = false, unique = true)
     private String correo;
+    
 
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     boolean activo;
@@ -50,12 +51,13 @@ public class Usuario {
 
     //Constructor:
 
-    public Usuario(Integer id, String nombre, String apellido, String correo, String clave) {
+    public Usuario(Integer id, String nombre, String apellido, String correo, String clave, boolean activo) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo=correo;
         this.clave = clave;
+        this.activo = activo;
     }
 
     //.....

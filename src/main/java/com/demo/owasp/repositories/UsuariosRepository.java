@@ -1,6 +1,7 @@
 package com.demo.owasp.repositories;
 
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -27,4 +28,6 @@ public interface UsuariosRepository extends CrudRepository<Usuario, Integer>{
     Integer esCliente(Integer id);
 
     Optional<Usuario> findByCorreo(String correo);
+    @Query("SELECT u FROM Usuario u WHERE u.activo = true")
+    List<Usuario> listarActivos();
 }

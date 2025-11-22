@@ -14,8 +14,8 @@ public class Administrador extends Usuario{
     
     //Constructor:
 
-    public Administrador(Integer id, String nombre, String apellido, String correo, String clave ) {
-        super(id, nombre, apellido, correo, clave);
+    public Administrador(Integer id, String nombre, String apellido, String correo, String clave, boolean activo ) {
+        super(id, nombre, apellido, correo, clave, activo);
     }
 
     
