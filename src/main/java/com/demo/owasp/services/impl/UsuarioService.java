@@ -2,6 +2,7 @@ package com.demo.owasp.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -82,6 +83,13 @@ public class UsuarioService implements IUsuarioService{
         Usuario u = repo.findById(id).orElseThrow();
         u.setActivo(true);
         repo.save(u);
+    }
+
+    @Override
+    public Usuario buscarPorCorreo(String correo){
+        Usuario u = repo.findByCorreo(correo).orElseThrow();
+        u.setRoles(obtenerRoles(u.getId()));
+        return u;
     }
 
 }

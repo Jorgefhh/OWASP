@@ -12,4 +12,5 @@ public interface IUsuarioService {
     void modificar(Integer id, Usuario usuario);
     void darBaja(Integer id);
     void activar(Integer id);
+    public Usuario buscarPorCorreo(String correo);
 }
