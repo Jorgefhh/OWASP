@@ -1,2 +1,2 @@
-INSERT INTO usuario(nombre, apellido, clave, correo, activo)
-VALUES ('Jorge', 'Huarachi', '123456', 'jorge@ejemplo.com', true);
+INSERT INTO usuario(nombre, apellido, clave, correo, activo) VALUES ('Jorge', 'Huarachi', '$2a$10$XCMlC4vWn9xlD43M8ipXzOwBGE9QjSyaRbClILN9dgEc9MUm1l6CK', 'jorge@ejemplo.com', true);
+INSERT INTO cliente(id, puntos) VALUES (1,0);
