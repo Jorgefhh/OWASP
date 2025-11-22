@@ -2,7 +2,7 @@ package com.demo.owasp.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,7 +68,7 @@ public class UsuarioController {
     //Admin: dar de baja cualquier usuario
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> darDeBaja(@PathVariable Integer id) {
-        service.darDeBaja(id);
+        service.darBaja(id);
         return ResponseEntity.ok().build();
     }
   
