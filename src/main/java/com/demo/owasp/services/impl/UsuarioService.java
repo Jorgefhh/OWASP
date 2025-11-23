@@ -2,12 +2,13 @@ package com.demo.owasp.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Service;
 
+import com.demo.owasp.dto.UsuarioDTO;
+import com.demo.owasp.model.Cliente;
 import com.demo.owasp.model.Usuario;
 import com.demo.owasp.model.enums.Rol;
 import com.demo.owasp.repositories.UsuariosRepository;
@@ -39,17 +40,34 @@ public class UsuarioService implements IUsuarioService{
     public List<Usuario> listar() {
         List<Usuario> lista = StreamSupport.stream(repo.findAll().spliterator(), false)
                             .collect(Collectors.toList());
-       // List<Usuario> lista = repo.listarActivos();
         
         lista.forEach(usuario->{usuario.setRoles(obtenerRoles(usuario.getId()));});
 
         return lista;
     }
 
+    public List<UsuarioDTO> listarActivos(){
+        List<Usuario> lista = repo.listarActivos();
+                
+        List<UsuarioDTO> listaDto = new ArrayList<>();
+
+        lista.forEach(u -> {
+            listaDto.add(
+                new UsuarioDTO(u.getNombre(),u.getApellido(),u.getCorreo())
+            );
+        });
+        
+        return listaDto;
+    }
+
+    /**
+     * Registra un nuevo usuario con el Rol CLIENTE y 0 puntos.
+     */
     @Override
-    public Integer registrarUsuario(Usuario usuario) {
-        Usuario nuevo = repo.save(usuario);
-        nuevo.setRoles(List.of(Rol.ROLE_CLIENTE));
+    public Integer registrarUsuario(Cliente cliente) {
+        cliente.setPuntos(0);
+        cliente.setActivo(true);
+        Cliente nuevo = repo.save(cliente);
         return nuevo.getId();
     }
 

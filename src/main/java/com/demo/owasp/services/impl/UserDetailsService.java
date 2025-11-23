@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.demo.owasp.model.CustomUserDetails;
 import com.demo.owasp.model.Usuario;
-import com.demo.owasp.repositories.UsuariosRepository;
 import com.demo.owasp.services.interfaces.IUsuarioService;
 
 
