@@ -37,7 +37,7 @@ public class AuthController {
         this.jwtUtils = jwtUtils;
     }
 
-    @PostMapping("log-in")
+    @PostMapping("/log-in")
     public ResponseEntity<RespuestaLoginDto> iniciarSesion(@RequestBody PeticionLoginDto peticionLogin ){
         Authentication authentication = authManager.authenticate(
             new UsernamePasswordAuthenticationToken(peticionLogin.correo(), peticionLogin.clave())
@@ -50,7 +50,7 @@ public class AuthController {
     }
 
         //1: Todos pueden registarse (USUARIOS)
-    @PostMapping()
+    @PostMapping("/register")
     public ResponseEntity<Integer> registrar(@RequestBody Cliente usuario) {
         usuario.setClave(encoder.encode(usuario.getClave()));
         Integer id = service.registrarUsuario(usuario);
