@@ -28,6 +28,10 @@ public interface UsuariosRepository extends CrudRepository<Usuario, Integer>{
     Integer esCliente(Integer id);
 
     Optional<Usuario> findByCorreo(String correo);
+
     @Query("SELECT u FROM Usuario u WHERE u.activo = true")
     List<Usuario> listarActivos();
+
+    @Query("SELECT u FROM Usuario u WHERE u.id =:id")
+    Optional<Usuario> findUsuarioById(Integer id);
 }

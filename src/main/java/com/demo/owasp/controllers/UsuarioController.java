@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.owasp.dto.UsuarioDTO;
-import com.demo.owasp.model.CustomUserDetails;
 import com.demo.owasp.model.Usuario;
 import com.demo.owasp.services.impl.UsuarioService;
 
@@ -77,23 +75,24 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
-    //5 : Dar de baja cualquier usuario (SOLO ADMIN)
-    @PatchMapping("/{id}")   
+    //5: (USUARIOS) Usuarios pueden listar todos los usuarios activos
+    @GetMapping("/activos")
+    //@PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<UsuarioDTO>> listarUsuarios() {
+        return ResponseEntity.ok(service.listarActivos());
+    }
+    
+    //6: Dar de baja cualquier usuario (SOLO ADMIN)
+    @PatchMapping("/{id}/baja")   
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> darDeBaja(@PathVariable Integer id) {
         service.darBaja(id);
         return ResponseEntity.noContent().build();
     }
     
-    //6: (USUARIOS) Usuarios pueden listar todos los usuarios activos
-    @GetMapping("/activos")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<UsuarioDTO>> listarUsuarios() {
-        return ResponseEntity.ok(service.listarActivos());
-    }
-
-     //7 : (INSEGURO) Dar de baja cualquier usuario 
-    @PatchMapping("/baja-inseguro/{id}")   
+     //7: (INSEGURO) Dar de baja cualquier usuario 
+    @PatchMapping("/{id}/baja-inseguro")
+    @PreAuthorize("isAuthenticated()")   
     public ResponseEntity<Void> darDeBaja2(@PathVariable Integer id) {
         service.darBaja(id);
         return ResponseEntity.noContent().build();

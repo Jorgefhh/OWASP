@@ -73,8 +73,9 @@ public class UsuarioService implements IUsuarioService{
 
     @Override
     public void modificar(Integer id, Usuario usuario) {
-        Usuario u = repo.findById(id).orElseThrow();
+        Usuario u = repo.findUsuarioById(id).orElseThrow();
         usuario.setCorreo(u.getCorreo());
+        usuario.setId(id);
         repo.save(usuario);
     }
 
